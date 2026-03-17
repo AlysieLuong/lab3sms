@@ -1,8 +1,13 @@
+import { Link } from "expo-router";
 import * as SMS from "expo-sms";
-import { Alert, Button, StyleSheet, View } from "react-native";
+import React from "react";
+import { Alert, Button, StyleSheet, TextInput, View } from "react-native";
 
 export default function HomeScreen() {
-  const id = ["0123456789", "9876543210"]; //change these phone numbers
+  const id = ["0466477688"]; //change these phone numbers
+  const [text, onChangeText] = React.useState(
+    "Hello: My lecturer is the greatest!!",
+  );
 
   function askToSend() {
     Alert.alert("SMS Send", "Send: " + id, [
@@ -19,14 +24,13 @@ export default function HomeScreen() {
   async function _handlePressButtonAsync() {
     const { result } = await SMS.sendSMSAsync(
       id,
-      "My lecturer is the greatest!!",
-      {
-        attachments: {
+      text,
+      /* { attachments: {
           uri: "https://www.latrobe.edu.au/",
           mimeType: "image/png",
           filename: "myfile.png",
         },
-      },
+      }, */
     );
     if (result === "sent") {
       alert("sent");
@@ -37,8 +41,13 @@ export default function HomeScreen() {
   return (
     <View style={styles.header}>
       <View style={styles.containerRow}>
-        <Button title="send SMS" onPress={() => AskToSend()} />
+        <Button title="send SMS" onPress={() => askToSend()} />
+
+        <Link href="./contacts" asChild>
+          <Button title="contacts"></Button>
+        </Link>
       </View>
+      <TextInput onChangeText={onChangeText} value={text} />
     </View>
   );
 }
