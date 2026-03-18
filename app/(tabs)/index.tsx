@@ -1,10 +1,16 @@
-import { Link } from "expo-router";
+import { Link, useLocalSearchParams } from "expo-router";
 import * as SMS from "expo-sms";
 import React from "react";
-import { Alert, Button, StyleSheet, TextInput, View } from "react-native";
+import {
+  Alert,
+  Button,
+  StyleSheet,
+  TextInput,
+  View
+} from "react-native";
 
 export default function HomeScreen() {
-  const id = ["0466477688"]; //change these phone numbers
+  const { id } = useLocalSearchParams<{ id: ["0123456789", "9876543210"] }>(); //, '9876543210']; //change these phone numbers
   const [text, onChangeText] = React.useState(
     "Hello: My lecturer is the greatest!!",
   );
@@ -12,10 +18,10 @@ export default function HomeScreen() {
   function askToSend() {
     Alert.alert("SMS Send", "Send: " + id, [
       {
-        text: "cancel",
+        text: "Cancel",
       },
       {
-        text: "ok",
+        text: "Ok",
         onPress: () => _handlePressButtonAsync(),
       },
     ]);
@@ -25,26 +31,28 @@ export default function HomeScreen() {
     const { result } = await SMS.sendSMSAsync(
       id,
       text,
-      /* { attachments: {
-          uri: "https://www.latrobe.edu.au/",
-          mimeType: "image/png",
-          filename: "myfile.png",
-        },
-      }, */
+      /* {
+      attachments: {
+        uri: 'https://www.latrobe.edu.au/__data/assets/file/0010/796393/logo-white.svg',
+        mimeType: 'image/png',
+        filename: 'myfile.png',
+      },
+    } */
     );
     if (result === "sent") {
-      alert("sent");
+      alert("Sent");
     } else {
       alert("Error: Check your balance or check phone");
     }
   }
+
   return (
     <View style={styles.header}>
       <View style={styles.containerRow}>
-        <Button title="send SMS" onPress={() => askToSend()} />
+        <Button title="Send SMS" onPress={() => askToSend()} />
 
         <Link href="./contacts" asChild>
-          <Button title="contacts"></Button>
+          <Button title="Contacts"></Button>
         </Link>
       </View>
       <TextInput onChangeText={onChangeText} value={text} />
