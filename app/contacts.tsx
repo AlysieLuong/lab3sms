@@ -7,7 +7,7 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  View
+  View,
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
@@ -46,7 +46,7 @@ export default function ContactScreen() {
 
   return (
     <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={style.container}>
         <Link href="/(tabs)" asChild>
           <Button title="Index (Back)"></Button>
         </Link>
